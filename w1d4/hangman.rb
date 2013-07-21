@@ -11,9 +11,9 @@ class Hangman
     @board = ['_'] * @referee.word_length
 
     tries = 0
-    until tries > MAX_TRIES || won?
+    until tries >= MAX_TRIES || won?
       guess = @guesser.guess_letter(@board, tries)
-      @referee.check_board(@board, tries, guess)
+      tries += 1 unless @referee.good_guess?(@board, guess)
     end
 
     if won?
@@ -38,7 +38,7 @@ class HumanPlayer
     gets.chomp
   end
 
-  def check_board(board, tries, guess)
+  def good_guess?(board, guess)
     print "Is '#{ guess }' in your word? (y/n) "
     answer = gets[0].downcase
 
@@ -46,8 +46,9 @@ class HumanPlayer
       print "Which positions is '#{guess}'? (comma separated) "
       positions = gets.chomp.split(',')
       positions.each { |pos| board[pos] = guess }
+      true
     else
-      tries += 1
+      false
     end
   end
 
@@ -65,24 +66,48 @@ class HumanPlayer
 end
 
 class ComputerPlayer
+  def initialize
+    @first_round = true
+    @visited_chars = []
+  end
+
   def guess_letter(board, tries)
-    guess = ('a'..'z').to_a.sample
+    if @first_round
+      @first_round = false
+      @dictionary = File.readlines('dictionary.txt').map(&:chomp)
+      @dictionary.select! { |entry| entry.length == board.length }
+    end
+
+    board.each_with_index do |char, i|
+      next if char == '_'
+      @dictionary.select! { |entry| entry[i] == char }
+    end
+
+    freq_hash = Hash.new(0)
+    @dictionary.join('').each_char do |char|
+      freq_hash[char] += 1
+    end
+
+    freq_hash.delete_if { |key| @visited_chars.include?(key) }
+    guess = freq_hash.max_by { |k, v| v }[0]
+    @visited_chars << guess
+
     puts "Secret word: #{ board.join(' ') }"
     puts "Tries left: #{ MAX_TRIES - tries }"
     puts "Computer guesses '#{ guess }'\n"
     guess
   end
 
-  def check_board(board, tries, guess)
+  def good_guess?(board, guess)
     if @word.include?(guess)
 
       @word.split('').each_with_index do |char, i|
-        board[i] = guess if @word[i] == char
+        board[i] = guess if @word[i] == guess
       end
-      p board
+      true
 
     else
-      tries += 1
+      false
     end
   end
 

@@ -45,7 +45,7 @@ class HumanPlayer
     if answer == 'y'
       print "Which positions is '#{guess}'? (comma separated) "
       positions = gets.chomp.split(',')
-      positions.each { |pos| board[pos] = guess }
+      positions.each { |pos| board[pos.to_i] = guess }
       true
     else
       false
@@ -119,8 +119,8 @@ class ComputerPlayer
 end
 
 if __FILE__ == $PROGRAM_NAME
-  referee = ComputerPlayer.new
-  guesser = ComputerPlayer.new
+  referee = HumanPlayer.new
+  guesser = HumanPlayer.new
   h = Hangman.new(referee, guesser)
   h.play
 end

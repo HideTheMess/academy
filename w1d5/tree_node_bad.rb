@@ -1,5 +1,5 @@
 class TreeNode
-  attr_writer :parent
+  attr_accessor :parent, :left_child, :right_child
 
   def initialize(value = nil)
     @value = value
@@ -14,15 +14,15 @@ class TreeNode
 
   # Setters
   def left=(left_child)
-    p @left_child
+    # p @left_child
     # nil
-    set_child(@left_child, left_child)
-    p @left_child
+    set_child(self, left_child, 'left')
+    # p @left_child
     # nil
   end
 
   def right=(right_child)
-    set_child(@right_child, right_child)
+    set_child(self, right_child, 'right')
   end
 
   def value=(value)
@@ -55,14 +55,20 @@ class TreeNode
     child.parent = nil unless child.nil?
   end
 
-  def set_child(child_side, new_child)
-    p "#{ child_side.nil? ? 'nil' : child_side.value } #{ new_child.value }"
-    disown_child(child_side)
-    p "#{ child_side.nil? ? 'nil' : child_side.value } #{ new_child.value }"
-    child_side = new_child
-    p "#{ child_side.nil? ? 'nil' : child_side.value } #{ new_child.value }"
-    new_child.parent = self
-    p "#{ child_side.nil? ? 'nil' : child_side.value } #{ new_child.value }"
+  def set_child(parent, new_child, side)
+    if side == 'left'
+      p "#{ parent.left_child.nil? ? 'nil' : parent.left_child.value } #{ new_child.value }"
+      disown_child(parent.left_child)
+      parent.left_child = new_child
+      p "#{ parent.left_child.nil? ? 'nil' : parent.left_child.value } #{ new_child.value }"
+      new_child.parent = self
+    elsif side == 'right'
+      p "#{ parent.right_child.nil? ? 'nil' : parent.right_child.value } #{ new_child.value }"
+      disown_child(parent.right_child)
+      parent.right_child = new_child
+      p "#{ parent.right_child.nil? ? 'nil' : parent.right_child.value } #{ new_child.value }"
+      new_child.parent = self
+    end
   end
 end
 

@@ -7,6 +7,17 @@ class Minesweeper
   end
 
   def display_board
+    display = []
+
+    @board.size.times do |row|
+      display << "#{row} #{@board[row].join(' ')}"
+    end
+
+    last_row = ''
+    @board.size.times { |col| last_row += col.to_s + ' ' }
+    display << '  ' + last_row.chomp
+
+    display.join("\n")
   end
 
   def make_board(size)
@@ -39,6 +50,14 @@ class Minesweeper
   end
 
   def play
+    place_bombs
+
+    while true
+
+
+
+    end
+
   end
 end
 
@@ -79,6 +98,17 @@ class Tile
 
   def place_bomb
     @bomb = true
+  end
+
+  def reveal_tile
+    return if @revealed
+    @revealed = true
+
+    if bomb_count == 0
+      neighbors.each do |neighbor|
+        neighbor.reveal_tile
+      end
+    end
   end
 
   def toggle_flag

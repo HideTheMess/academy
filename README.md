@@ -1,56 +1,12 @@
-academy
-=======
-# Intro Ruby Topics
-
-[TODO](./TODO.md)
-
-## Meta
-
-+ [Course Preliminaries][course-preliminaries]
-+ [Daily requirements][daily-requirements]
-+ [First day instructions][first-day-instructions]
-
-[course-preliminaries]: https://github.com/appacademy/meta/blob/master/course-preliminaries.md
-[daily-requirements]: https://github.com/appacademy/meta/blob/master/daily-requirements.md
-[first-day-instructions]: https://github.com/appacademy/meta/blob/master/first-day-instructions.md
+# App Academy Coursework
 
 ## Ruby basics
-### w1d1
-+ [Keyboard Shortcuts][keyboard-shortcuts]
-+ [A note on Ruby versions][versions]
-+ Primitive Ruby types (common methods)
-  + [Array][array]
-  + [String][string]
-  + [Hash][hash]
-  + [Enumerable][enumerable]
-  + [Object][object]
-+ Debugging
-  + [pry and debugger][pry-and-debugger]
-  + [common error messages][common-error-messages]
-+ [Source files][source-files]
-+ [Writing a Ruby Script][writing-a-script]
-+ **Project**: In Words (ex #15) from [Test First Ruby][test-first-ruby]
-+ **Bonus project**: [Maze solver][maze-project]
-+ **Bonus project**: Use Ruby to solve the
-  [eight-queens problems][eight-queens]
+### Week 1, Day 1
++ [Fixnum In Words][in_words]
 
-[versions]: ./language-basics/versions.md
-[array]: https://github.com/appacademy/ruby-curriculum/blob/master/language-basics/data-structures/array.md
-[string]: https://github.com/appacademy/ruby-curriculum/blob/master/language-basics/data-structures/string.md
-[hash]: https://github.com/appacademy/ruby-curriculum/blob/master/language-basics/data-structures/hash.md
-[enumerable]: https://github.com/appacademy/ruby-curriculum/blob/master/language-basics/data-structures/enumerable.md
-[object]: https://github.com/appacademy/ruby-curriculum/blob/master/language-basics/data-structures/object.md
-[pry-and-debugger]: https://github.com/appacademy/ruby-curriculum/blob/master/debugging/debugger.md
-[common-error-messages]: https://github.com/appacademy/ruby-curriculum/blob/master/debugging/common-exceptions.md
-[source-files]: ./language-basics/source-files.md
-[writing-a-script]: ./language-basics/writing-a-script.md
-[keyboard-shortcuts]: https://github.com/appacademy/ruby-curriculum/blob/master/shortcuts.md
+[in_words]: w1d1/in_words.rb
 
-[test-first-ruby]: https://github.com/alexch/learn_ruby
-[maze-project]: https://github.com/appacademy/ruby-curriculum/blob/master/projects/maze-solver.md
-[eight-queens]: http://en.wikipedia.org/wiki/Eight_queens_puzzle
-
-### w1d2
+### Week 1, Day 2
 + [Methods][methods]
 + [DRY: Don't Repeat Yourself][dry]
 + [Coding style][coding-style]
@@ -79,7 +35,7 @@ academy
 
 ## Basic design
 
-### w1d3
+### Week 1, Day 3
 + [Designing a Program][program-design]
 + [Refactoring and Code Smells][code-smells]
 + [Scope][scope]
@@ -95,7 +51,7 @@ academy
 
 ## Algorithms
 
-### w1d4
+### Week 1, Day 4
 + [Blocks][blocks]
 + [Recursion][recursion]
 + **Project**: [Word chains][word-chains]
@@ -108,7 +64,7 @@ academy
 [test-first-ruby]: https://github.com/alexch/learn_ruby
 [method_missing]: https://github.com/appacademy/ruby-curriculum/blob/master/language-intermediate/reflection.md#method_missing
 
-### w1d5
+### Week 1, Day 5
 + [Intro data structures][intro-data-structures]
 + **Project**: [Knight's Travails][knights-travails]
 + **Project**: [Tic-Tac-Toe AI][tic-tac-toe-ai]
@@ -119,7 +75,7 @@ academy
 [tic-tac-toe-ai]: ./projects/tic-tac-toe-ai.md
 
 ## Git
-### w1d6-w1d7
+### Week 1, Weekend
 + [git](https://github.com/appacademy/ruby-curriculum/blob/master/git.md)
 + **Project**: [Git immersion](http://gitimmersion.com/)
 + **Project**: Do Hangman and Word chains again, using git this

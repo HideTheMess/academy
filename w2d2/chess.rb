@@ -9,7 +9,7 @@ class Chess
   end
 
   def play
-    board.place_pieces
+    @board.place_pieces
 
     @white = HumanPlayer.new(self, :white)
     @black = HumanPlayer.new(self, :black)

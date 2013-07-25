@@ -2,22 +2,36 @@ BOARD_SIZE = 8
 
 class Chess
   attr_reader :board
+  attr_reader :white, :black # Debug
 
   def initialize
-    @board = Board.new
+    @board = ChessBoard.new
   end
 
   def play
     board.place_pieces
+
+    @white = HumanPlayer.new(self, :white)
+    @black = HumanPlayer.new(self, :black)
+
+    player_toggle = true
+    while false # While the game is still on
+      if player_toggle
+        white.make_move
+        player_toggle = false
+      else
+        black.make_move
+        player_toggle = true
+      end
+    end
   end
 end
 
 class Board
-  attr_reader :board # Debug
+  attr_reader :board
 
   def initialize
     @board = create_board
-
   end
 
   def create_board
@@ -32,6 +46,12 @@ class Board
     new_board
   end
 
+  def move_pieces(current_pos, next_pos)
+
+  end
+end
+
+class ChessBoard < Board
   def place_pieces
     # Place pawns
     BOARD_SIZE.times do |col|
@@ -145,6 +165,23 @@ class King < Piece
 end
 
 class HumanPlayer
+  def initialize(game, side)
+    @game, @side = game, side
+  end
+
+  def human_input_converter(human_input)
+    human_input_array = human_input.split(',')
+
+    human_input_array.map do |input|
+      [BOARD_SIZE - input[1], input[0].ord - 97]
+    end
+  end
+
+  def make_move
+    p @game.board
+    print "What's your move? ex. a1,a2 : "
+    gets.chomp
+  end
 end
 
 # Colors for Strings found here:
@@ -155,4 +192,9 @@ class String
   def gray;           "\033[37m#{self}\033[0m" end
   def bg_cyan;        "\033[46m#{self}\033[0m" end
   def bold;           "\033[1m#{self}\033[22m" end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  c = Chess.new
+  c.play
 end

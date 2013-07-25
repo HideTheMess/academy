@@ -1,6 +1,16 @@
 BOARD_SIZE = 8
 
-class Chess
+class Game
+  def initialize
+    @board = Board.new
+  end
+
+  def valid_move?(move_pos, side)
+    @board.valid_move?(move_pos, side)
+  end
+end
+
+class Chess < Game
   attr_reader :board
   attr_reader :white, :black # Debug
 
@@ -28,10 +38,6 @@ class Chess
         player_toggle = true
       end
     end
-  end
-
-  def valid_move?(move_pos, side)
-    @board.valid_move?(move_pos, side)
   end
 end
 
@@ -185,7 +191,7 @@ class HumanPlayer
     human_input_array = human_input.split(',')
 
     human_input_array.map do |input|
-      [BOARD_SIZE - input[1], input[0].ord - 97]
+      [BOARD_SIZE - input[1].to_i, input[0].ord - 97]
     end
   end
 

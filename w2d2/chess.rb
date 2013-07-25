@@ -27,14 +27,14 @@ class Chess < Game
     player_toggle = true
     while false # While the game is still on
       if player_toggle
-        current_pos, next_pos = @white.make_move
+        move_pos = @white.make_move
 
-        @board.move_pieces(current_pos, next_pos)
+        @board.move_pieces(move_pos)
         player_toggle = false
       else
-        current_pos, next_pos = @black.make_move
+        move_pos = @black.make_move
 
-        @board.move_pieces(current_pos, next_pos)
+        @board.move_pieces(move_pos)
         player_toggle = true
       end
     end
@@ -60,12 +60,18 @@ class Board
     new_board
   end
 
-  def move_pieces(current_pos, next_pos)
-
+  def piece_exist?(pos)
+    row, col = pos
+    return true if @board[row][col].is_a?(Piece)
+    false
   end
 end
 
 class ChessBoard < Board
+  def move_pieces(move_pos) # TODO
+
+  end
+
   def place_pieces
     # Place pawns
     BOARD_SIZE.times do |col|
@@ -117,6 +123,8 @@ class ChessBoard < Board
 end
 
 class Piece
+  attr_reader :side
+
   def initialize(pos, side)
     @pos, @side = pos, side
   end
@@ -208,6 +216,7 @@ class HumanPlayer
 
   def make_move
     valid_input = false
+    move_pos = []
     until valid_input
       p @game.board
       print "What's your move? ex. a1,a2 : "
@@ -218,6 +227,8 @@ class HumanPlayer
 
       puts 'Invalid input, please try again' unless valid_input
     end
+
+    move_pos
   end
 
   def valid_move?(move_pos, side)

@@ -29,6 +29,10 @@ class Chess
       end
     end
   end
+
+  def valid_move?(move_pos, side)
+    @board.valid_move?(move_pos, side)
+  end
 end
 
 class Board
@@ -82,6 +86,10 @@ class ChessBoard < Board
     @board[7][5] = Bishop.new([7, 5], :white)
     @board[7][3] = Queen.new([7, 3], :white)
     @board[7][4] = King.new([7, 4], :white)
+  end
+
+  def valid_move?(move_pos, side)
+    true # TODO
   end
 
   def to_s
@@ -181,20 +189,7 @@ class HumanPlayer
     end
   end
 
-  def make_move
-    valid_input = false
-    until valid_input
-      p @game.board
-      print "What's your move? ex. a1,a2 : "
-      human_input = gets.chomp.downcase.gsub(/\s+/, "")
-
-      valid_input = valid_move?(human_input)
-
-      puts 'Invalid input, please try again' unless valid_input
-    end
-  end
-
-  def valid_move?(string)
+  def good_format?(string)
     size_verify   = string.size == 5
     letter_verify = regex_indices(string, /[a-h]/) == [0, 3]
     number_verify = regex_indices(string, /[1-8]/) == [1, 4]
@@ -203,6 +198,24 @@ class HumanPlayer
     return false unless letter_verify && number_verify \
                         && comma_verify && size_verify
     true
+  end
+
+  def make_move
+    valid_input = false
+    until valid_input
+      p @game.board
+      print "What's your move? ex. a1,a2 : "
+      human_input = gets.chomp.downcase.gsub(/\s+/, "")
+
+      move_pos = human_input_converter(human_input)
+      valid_input = good_format?(human_input) && valid_move?(move_pos, @side)
+
+      puts 'Invalid input, please try again' unless valid_input
+    end
+  end
+
+  def valid_move?(move_pos, side)
+    @game.valid_move?(move_pos, side)
   end
 
   # Helper methods

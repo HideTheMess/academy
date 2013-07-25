@@ -17,10 +17,14 @@ class Chess
     player_toggle = true
     while false # While the game is still on
       if player_toggle
-        white.make_move
+        current_pos, next_pos = @white.make_move
+
+        @board.move_pieces(current_pos, next_pos)
         player_toggle = false
       else
-        black.make_move
+        current_pos, next_pos = @black.make_move
+
+        @board.move_pieces(current_pos, next_pos)
         player_toggle = true
       end
     end
@@ -178,9 +182,43 @@ class HumanPlayer
   end
 
   def make_move
-    p @game.board
-    print "What's your move? ex. a1,a2 : "
-    gets.chomp
+    valid_input = false
+    until valid_input
+      p @game.board
+      print "What's your move? ex. a1,a2 : "
+      human_input = gets.chomp.downcase.gsub(/\s+/, "")
+
+      valid_input = valid_move?(human_input)
+
+      puts 'Invalid input, please try again' unless valid_input
+    end
+  end
+
+  def valid_move?(string)
+    size_verify   = string.size == 5
+    letter_verify = regex_indices(string, /[a-h]/) == [0, 3]
+    number_verify = regex_indices(string, /[1-8]/) == [1, 4]
+    comma_verify  = string[2] == ','
+
+    return false unless letter_verify && number_verify \
+                        && comma_verify && size_verify
+    true
+  end
+
+  # Helper methods
+  def regex_indices(string, regex)
+    indices = []
+
+    i = 0
+
+    while i < string.size
+      return indices if string.index(regex, i).nil?
+      found_index = string.index(regex, i)
+      indices << found_index
+      i = found_index + 1
+    end
+
+    indices
   end
 end
 

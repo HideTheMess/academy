@@ -14,19 +14,29 @@ class Checkers < Game
     @red   = HumanPlayer.new(self, :red)
 
     player_toggle = true
-    while false # While the game is still on
+    # while false # While the game is still on # Debug
       if player_toggle
-        move_pos = @white.make_move
+        begin
+          move_pos = @white.make_move
+        rescue ArgumentError => error
+          puts error.message
+        retry
+        end
 
         @board.move_pieces(move_pos)
         player_toggle = false
       else
-        move_pos = @red.make_move
+        begin
+          move_pos = @red.make_move
+        rescue ArgumentError => error
+          puts error.message
+        retry
+        end
 
         @board.move_pieces(move_pos)
         player_toggle = true
       end
-    end
+    # end
   end
 end
 
@@ -37,6 +47,8 @@ class CheckerBoard < Board
   end
 
   def move_pieces(move_pos)
+    current_pos, next_pos = move_pos
+
 
   end
 
@@ -171,5 +183,5 @@ end
 def debug
   c = Checkers.new
   c.play
-  c.red.make_move
+  # c.red.make_move
 end

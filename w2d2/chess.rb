@@ -25,19 +25,29 @@ class Chess < Game
     @black = HumanPlayer.new(self, :black)
 
     player_toggle = true
-    while false # While the game is still on
+    # while false # While the game is still on # Debug
       if player_toggle
-        move_pos = @white.make_move
+        begin
+          move_pos = @white.make_move
+        rescue ArgumentError => error
+          puts error.message
+        retry
+        end
 
         @board.move_pieces(move_pos)
         player_toggle = false
       else
-        move_pos = @black.make_move
+        begin
+          move_pos = @black.make_move
+        rescue ArgumentError => error
+          puts error.message
+        retry
+        end
 
         @board.move_pieces(move_pos)
         player_toggle = true
       end
-    end
+    # end
   end
 end
 
@@ -215,18 +225,19 @@ class HumanPlayer
   end
 
   def make_move
-    valid_input = false
     move_pos = []
-    until valid_input
       p @game.board
       print "What's your move? ex. a1,a2 : "
       human_input = gets.chomp.downcase.gsub(/\s+/, "")
 
-      move_pos = human_input_converter(human_input)
-      valid_input = good_format?(human_input) && valid_move?(move_pos, @side)
+      unless good_format?(human_input)
+        raise ArgumentError.new 'Bad input format; please follow the example'
+      end
 
-      puts 'Invalid input, please try again' unless valid_input
-    end
+      move_pos = human_input_converter(human_input)
+      unless valid_move?(move_pos, @side)
+        raise ArgumentError.new 'Move not allowed; please follow game rules'
+      end
 
     move_pos
   end
@@ -260,6 +271,12 @@ class String
   def gray;           "\033[37m#{self}\033[0m" end
   def bg_cyan;        "\033[46m#{self}\033[0m" end
   def bold;           "\033[1m#{self}\033[22m" end
+end
+
+def debug
+  c = Chess.new
+  c.play
+  # c.white.make_move
 end
 
 if __FILE__ == $PROGRAM_NAME

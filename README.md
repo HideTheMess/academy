@@ -50,3 +50,11 @@
 
 [enumerable]: w2d2/enumerable.rb
 [chess]: w2d2/chess.rb
+
+### Week2, Day 4
++ [Checkers][checkers]
+
+[checkers]: w2d4/checkers.rb
+
+## RSpec
+### Week 2, Day 5

@@ -47,8 +47,7 @@ class CheckerBoard < Board
   end
 
   def move_pieces(move_pos)
-    current_pos, next_pos = move_pos
-
+    super(move_pos)
 
   end
 
@@ -62,29 +61,6 @@ class CheckerBoard < Board
     (5..7).each do |row|
       place_checker_piece(row, :white)
     end
-  end
-
-  def valid_move?(move_pos, side)
-    current_pos, next_pos = move_pos
-
-    return false unless piece_exist?(current_pos)
-    return false unless side == @board[current_pos[0]][current_pos[1]].side
-
-    # Make sure all moves are diagonal & correct move length
-    row_diff_abs = (current_pos[0] - next_pos[0]).abs
-    col_diff_abs = (current_pos[1] - next_pos[1]).abs
-    return false unless row_diff_abs == col_diff_abs
-    return false if row_diff_abs > 2 # && col_diff_abs > 2
-
-    return false if piece_exist?(next_pos)
-
-    if row_diff_abs == 2
-      return false unless valid_jump?(move_pos, side)
-    else # if row_diff == 1
-      return false unless valid_slide?(move_pos, side)
-    end
-
-    true
   end
 
   def to_s
@@ -128,38 +104,6 @@ class CheckerBoard < Board
                           unless @board[row][col] == :forbidden_tile
     end
   end
-
-  def valid_jump?(move_pos, side)
-    current_pos, next_pos = move_pos
-
-    target_row = (current_pos[0] + next_pos[0]) / 2
-    target_col = (current_pos[1] + next_pos[1]) / 2
-
-    return false if @board[target_row][target_col].nil?
-
-    sides = [:white, :red]
-    sides.delete(side)
-    enemy_side = sides[0]
-
-    return false unless @board[target_row][target_col].side == enemy_side
-    true
-  end
-
-  def valid_slide?(move_pos, side)
-    current_pos, next_pos = move_pos
-
-    return true if @board[current_pos[0]][current_pos[1]].king
-
-    row_diff = current_pos[0] - next_pos[0]
-    # Side-specific checks
-    if side == :white
-      return false unless row_diff > 0 # Always going forward
-    else # side == :red
-      return false unless row_diff < 0
-    end
-
-    true
-  end
 end
 
 class CheckerPiece < Piece
@@ -170,8 +114,68 @@ class CheckerPiece < Piece
     @king = false
   end
 
+  def valid_move?(move_pos, player_side, board)
+    current_pos, next_pos = move_pos
+
+    return false unless board.piece_exist?(current_pos)
+    # Move your own pieces
+    return false unless player_side \
+                        == board.board[current_pos[0]][current_pos[1]].side
+
+    # Make sure all moves are diagonal & correct move length
+    row_diff_abs = (current_pos[0] - next_pos[0]).abs
+    col_diff_abs = (current_pos[1] - next_pos[1]).abs
+    return false unless row_diff_abs == col_diff_abs
+    return false if row_diff_abs > 2 # && col_diff_abs > 2
+
+    # Detect another piece already at destination
+    return false if board.piece_exist?(next_pos)
+
+    if row_diff_abs == 2
+      return false unless valid_jump?(move_pos, board)
+    else # if row_diff == 1
+      return false unless valid_slide?(move_pos)
+    end
+
+    true
+  end
+
   def to_s
     @side == :white ? '@'.bold.gray.bg_cyan : '@'.bold.red.bg_cyan
+  end
+
+  # Helper methods
+  def valid_jump?(move_pos, board)
+    current_pos, next_pos = move_pos
+
+    target_row = (current_pos[0] + next_pos[0]) / 2
+    target_col = (current_pos[1] + next_pos[1]) / 2
+
+    # Can't jump unless there's an enemy at target
+    return false if board.board[target_row][target_col].nil?
+
+    sides = [:white, :red]
+    sides.delete(@side)
+    enemy_side = sides[0]
+
+    return false unless board.board[target_row][target_col].side == enemy_side
+    true
+  end
+
+  def valid_slide?(move_pos)
+    current_pos, next_pos = move_pos
+
+    return true if @king
+
+    row_diff = current_pos[0] - next_pos[0]
+    # Side-specific checks
+    if @side == :white
+      return false unless row_diff > 0 # Always going forward
+    else # side == :red
+      return false unless row_diff < 0
+    end
+
+    true
   end
 end
 

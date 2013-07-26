@@ -5,8 +5,8 @@ class Game
     @board = Board.new
   end
 
-  def valid_move?(move_pos, side)
-    @board.valid_move?(move_pos, side)
+  def valid_move?(move_pos, player_side)
+    @board.valid_move?(move_pos, player_side)
   end
 end
 
@@ -52,7 +52,7 @@ class Chess < Game
 end
 
 class Board
-  attr_reader :board
+  attr_reader :board # Game & Piece(s) need this
 
   def initialize
     @board = create_board
@@ -70,10 +70,22 @@ class Board
     new_board
   end
 
+  def move_pieces(move_pos)
+    current_pos, next_pos = move_pos
+
+
+  end
+
   def piece_exist?(pos)
     row, col = pos
     return true if @board[row][col].is_a?(Piece)
     false
+  end
+
+  def valid_move?(move_pos, player_side)
+    current_pos = move_pos[0]
+    @board[current_pos[0]][current_pos[1]].valid_move?(move_pos, \
+                                                      player_side, self)
   end
 end
 
@@ -110,10 +122,6 @@ class ChessBoard < Board
     @board[7][4] = King.new([7, 4], :white)
   end
 
-  def valid_move?(move_pos, side)
-    true # TODO
-  end
-
   def to_s
     puts '   a b c d e f g h'
     puts '  ' + '                 '.bg_cyan
@@ -133,7 +141,7 @@ class ChessBoard < Board
 end
 
 class Piece
-  attr_reader :side
+  attr_reader :side # Needed to detect potential enemy's side
 
   def initialize(pos, side)
     @pos, @side = pos, side
@@ -143,6 +151,10 @@ end
 class Pawn < Piece
   def initialize(pos, side)
     super(pos, side)
+  end
+
+  def valid_move?(move_pos, player_side, board)
+    true # TODO
   end
 
   def to_s
@@ -155,6 +167,10 @@ class Rook < Piece
     super(pos, side)
   end
 
+  def valid_move?(move_pos, player_side, board)
+    true # TODO
+  end
+
   def to_s
     @side == :white ? 'R'.bold.gray.bg_cyan : 'R'.bold.black.bg_cyan
   end
@@ -163,6 +179,10 @@ end
 class Knight < Piece
   def initialize(pos, side)
     super(pos, side)
+  end
+
+  def valid_move?(move_pos, player_side, board)
+    true # TODO
   end
 
   def to_s
@@ -175,6 +195,10 @@ class Bishop < Piece
     super(pos, side)
   end
 
+  def valid_move?(move_pos, player_side, board)
+    true # TODO
+  end
+
   def to_s
     @side == :white ? 'B'.bold.gray.bg_cyan : 'B'.bold.black.bg_cyan
   end
@@ -185,6 +209,10 @@ class Queen < Piece
     super(pos, side)
   end
 
+  def valid_move?(move_pos, player_side, board)
+    true # TODO
+  end
+
   def to_s
     @side == :white ? 'Q'.bold.gray.bg_cyan : 'Q'.bold.black.bg_cyan
   end
@@ -193,6 +221,10 @@ end
 class King < Piece
   def initialize(pos, side)
     super(pos, side)
+  end
+
+  def valid_move?(move_pos, player_side, board)
+    true # TODO
   end
 
   def to_s
@@ -242,8 +274,8 @@ class HumanPlayer
     move_pos
   end
 
-  def valid_move?(move_pos, side)
-    @game.valid_move?(move_pos, side)
+  def valid_move?(move_pos, player_side)
+    @game.valid_move?(move_pos, player_side)
   end
 
   # Helper methods

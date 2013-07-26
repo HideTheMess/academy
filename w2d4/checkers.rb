@@ -14,7 +14,7 @@ class Checkers < Game
     @red   = HumanPlayer.new(self, :red)
 
     player_toggle = true
-    # while false # While the game is still on # Debug
+    while true # While the game is still on # Debug
       if player_toggle
         begin
           move_pos = @white.make_move
@@ -36,7 +36,7 @@ class Checkers < Game
         @board.move_pieces(move_pos)
         player_toggle = true
       end
-    # end
+    end
   end
 end
 
@@ -47,8 +47,22 @@ class CheckerBoard < Board
   end
 
   def move_pieces(move_pos)
+    current_pos, next_pos = move_pos
     super(move_pos)
 
+    # Jump move-specific
+    row_diff_abs = (current_pos[0] - next_pos[0]).abs
+    if row_diff_abs == 2
+      target_row, target_col = target_pos(move_pos)
+      @board[target_row][target_col] = nil
+    end
+
+    # Side-specific king check
+    if @board[next_pos[0]][next_pos[1]].side == :white
+      @board[next_pos[0]][next_pos[1]].king = true if next_pos[0] == 0
+    else # side == :red
+      @board[next_pos[0]][next_pos[1]].king = true if next_pos[0] == 7
+    end
   end
 
   def place_pieces
@@ -104,10 +118,19 @@ class CheckerBoard < Board
                           unless @board[row][col] == :forbidden_tile
     end
   end
+
+  def target_pos(move_pos)
+    target_pos = []
+    current_pos, next_pos = move_pos
+    target_pos << (current_pos[0] + next_pos[0]) / 2
+    target_pos << (current_pos[1] + next_pos[1]) / 2
+
+    target_pos
+  end
 end
 
 class CheckerPiece < Piece
-  attr_reader :king
+  attr_accessor :king # CheckerBoard needs to promote after move
 
   def initialize(side)
     super(side)
@@ -150,10 +173,8 @@ class CheckerPiece < Piece
   def valid_jump?(move_pos, board)
     current_pos, next_pos = move_pos
 
-    target_row = (current_pos[0] + next_pos[0]) / 2
-    target_col = (current_pos[1] + next_pos[1]) / 2
-
     # Can't jump unless there's an enemy at target
+    target_row, target_col = board.target_pos(move_pos)
     return false if board.board[target_row][target_col].nil?
 
     sides = [:white, :red]
@@ -165,9 +186,8 @@ class CheckerPiece < Piece
   end
 
   def valid_slide?(move_pos)
-    current_pos, next_pos = move_pos
-
     return true if @king
+    current_pos, next_pos = move_pos
 
     row_diff = current_pos[0] - next_pos[0]
     # Side-specific checks

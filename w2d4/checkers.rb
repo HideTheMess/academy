@@ -118,9 +118,11 @@ class CheckerPiece < Piece
     current_pos, next_pos = move_pos
 
     return false unless board.piece_exist?(current_pos)
+    unless board.god_mode # God Mode
     # Move your own pieces
     return false unless player_side \
                         == board.board[current_pos[0]][current_pos[1]].side
+    end
 
     # Make sure all moves are diagonal & correct move length
     row_diff_abs = (current_pos[0] - next_pos[0]).abs

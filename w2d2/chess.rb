@@ -29,8 +29,8 @@ class Chess < Game
       if player_toggle
         begin
           move_pos = @white.make_move
-        rescue ArgumentError => error
-          puts error.message
+        rescue ArgumentError
+        rescue Over9000Error
         retry
         end
 
@@ -39,8 +39,8 @@ class Chess < Game
       else
         begin
           move_pos = @black.make_move
-        rescue ArgumentError => error
-          puts error.message
+        rescue ArgumentError
+        rescue Over9000Error
         retry
         end
 
@@ -53,9 +53,11 @@ end
 
 class Board
   attr_reader :board # Game & Piece(s) need this
+  attr_reader :god_mode # Piece(s) & HumanPlayer need this
 
   def initialize
     @board = create_board
+    @god_mode = false
   end
 
   def create_board
@@ -70,16 +72,22 @@ class Board
     new_board
   end
 
+  # move_pieces is naive about whether moves are valid; should be checked prior
   def move_pieces(move_pos)
     current_pos, next_pos = move_pos
 
-
+    @board[next_pos[0]][next_pos[1]] = @board[current_pos[0]][current_pos[1]]
+    @board[current_pos[0]][current_pos[1]] = nil
   end
 
   def piece_exist?(pos)
     row, col = pos
     return true if @board[row][col].is_a?(Piece)
     false
+  end
+
+  def toggle_god_mode
+    @god_mode = !@god_mode
   end
 
   def valid_move?(move_pos, player_side)
@@ -261,7 +269,15 @@ class HumanPlayer
       p @game.board
       puts "#{@side.to_s.capitalize} player's turn"
       print "What's your move? ex. a1,a2 : "
-      human_input = gets.chomp.downcase.gsub(/\s+/, "")
+      human_input = gets.chomp.gsub(/\s+/, "")
+
+      if human_input == 'Ned' # God Mode
+        @game.board.toggle_god_mode
+        raise Over9000Error.new \
+          "God Mode is now #{@game.board.god_mode ? 'ON' : 'OFF'}"
+      end
+
+      human_input = human_input.downcase
 
       unless good_format?(human_input)
         raise ArgumentError.new 'Bad input format; please follow the example'
@@ -294,6 +310,9 @@ class HumanPlayer
 
     indices
   end
+end
+
+class Over9000Error < ArgumentError
 end
 
 # Colors for Strings found here:

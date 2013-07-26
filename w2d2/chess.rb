@@ -98,28 +98,28 @@ class ChessBoard < Board
     # Place pawns
     BOARD_SIZE.times do |col|
       row = 1
-      @board[row][col] = Pawn.new([row, col], :black)
+      @board[row][col] = Pawn.new(:black)
       row = 6
-      @board[row][col] = Pawn.new([row, col], :white)
+      @board[row][col] = Pawn.new(:white)
     end
 
     # Place other pieces
-    @board[0][0] = Rook.new([0, 0], :black)
-    @board[0][7] = Rook.new([0, 7], :black)
-    @board[0][1] = Knight.new([0, 1], :black)
-    @board[0][6] = Knight.new([0, 6], :black)
-    @board[0][2] = Bishop.new([0, 2], :black)
-    @board[0][5] = Bishop.new([0, 5], :black)
-    @board[0][3] = Queen.new([0, 3], :black)
-    @board[0][4] = King.new([0, 4], :black)
-    @board[7][0] = Rook.new([7, 0], :white)
-    @board[7][7] = Rook.new([7, 7], :white)
-    @board[7][1] = Knight.new([7, 1], :white)
-    @board[7][6] = Knight.new([7, 6], :white)
-    @board[7][2] = Bishop.new([7, 2], :white)
-    @board[7][5] = Bishop.new([7, 5], :white)
-    @board[7][3] = Queen.new([7, 3], :white)
-    @board[7][4] = King.new([7, 4], :white)
+    @board[0][0] = Rook.new(:black)
+    @board[0][7] = Rook.new(:black)
+    @board[0][1] = Knight.new(:black)
+    @board[0][6] = Knight.new(:black)
+    @board[0][2] = Bishop.new(:black)
+    @board[0][5] = Bishop.new(:black)
+    @board[0][3] = Queen.new(:black)
+    @board[0][4] = King.new(:black)
+    @board[7][0] = Rook.new(:white)
+    @board[7][7] = Rook.new(:white)
+    @board[7][1] = Knight.new(:white)
+    @board[7][6] = Knight.new(:white)
+    @board[7][2] = Bishop.new(:white)
+    @board[7][5] = Bishop.new(:white)
+    @board[7][3] = Queen.new(:white)
+    @board[7][4] = King.new(:white)
   end
 
   def to_s
@@ -143,14 +143,14 @@ end
 class Piece
   attr_reader :side # Needed to detect potential enemy's side
 
-  def initialize(pos, side)
-    @pos, @side = pos, side
+  def initialize(side)
+    @side = side
   end
 end
 
 class Pawn < Piece
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
   end
 
   def valid_move?(move_pos, player_side, board)
@@ -163,8 +163,8 @@ class Pawn < Piece
 end
 
 class Rook < Piece
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
   end
 
   def valid_move?(move_pos, player_side, board)
@@ -177,8 +177,8 @@ class Rook < Piece
 end
 
 class Knight < Piece
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
   end
 
   def valid_move?(move_pos, player_side, board)
@@ -191,8 +191,8 @@ class Knight < Piece
 end
 
 class Bishop < Piece
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
   end
 
   def valid_move?(move_pos, player_side, board)
@@ -205,8 +205,8 @@ class Bishop < Piece
 end
 
 class Queen < Piece
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
   end
 
   def valid_move?(move_pos, player_side, board)
@@ -219,8 +219,8 @@ class Queen < Piece
 end
 
 class King < Piece
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
   end
 
   def valid_move?(move_pos, player_side, board)
@@ -259,6 +259,7 @@ class HumanPlayer
   def make_move
     move_pos = []
       p @game.board
+      puts "#{@side.to_s.capitalize} player's turn"
       print "What's your move? ex. a1,a2 : "
       human_input = gets.chomp.downcase.gsub(/\s+/, "")
 

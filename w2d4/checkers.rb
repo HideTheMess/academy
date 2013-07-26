@@ -83,7 +83,7 @@ class CheckerBoard < Board
         "#{ display.join(' '.bg_cyan) }" + ' '.bg_cyan + " #{ BOARD_SIZE - i }"
     end
     puts '  ' + '                 '.bg_cyan
-    puts '   a b c d e f g h'
+    print '   a b c d e f g h   '
   end
 
   # Helper methods
@@ -100,7 +100,7 @@ class CheckerBoard < Board
 
   def place_checker_piece(row, side)
     BOARD_SIZE.times do |col|
-      @board[row][col] = CheckerPiece.new([row, col], side) \
+      @board[row][col] = CheckerPiece.new(side) \
                           unless @board[row][col] == :forbidden_tile
     end
   end
@@ -109,8 +109,8 @@ end
 class CheckerPiece < Piece
   attr_reader :king
 
-  def initialize(pos, side)
-    super(pos, side)
+  def initialize(side)
+    super(side)
     @king = false
   end
 

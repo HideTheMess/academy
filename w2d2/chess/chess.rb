@@ -1,21 +1,19 @@
-require_relative '../tile_game'
-require_relative './checker_board'
+require_relative '../../tile_game.rb'
 
-
-class Checkers < Game
+class Chess < Square8TileGame
   # attr_reader :board # Unknown who needs this
-  attr_reader :white, :red # Debug
+  attr_reader :white, :black # Debug
 
   def initialize
     super
-    @board = CheckerBoard.new
+    @board = ChessBoard.new
   end
 
   def play
     @board.place_pieces
 
     @players << HumanPlayer.new(self, :white)
-    @players << HumanPlayer.new(self, :red)
+    @players << HumanPlayer.new(self, :black)
 
     loop do
       @players.each do |player|
@@ -24,12 +22,12 @@ class Checkers < Game
     end
 
     # player_toggle = true
-#     while true # While the game is still on # Debug
+#     # while false # While the game is still on # Debug
 #       if player_toggle
 #         begin
 #           move_pos = @white.make_move
-#         rescue ArgumentError => error
-#           puts error.message
+#         rescue ArgumentError
+#         rescue Over9000Error
 #         retry
 #         end
 #
@@ -37,16 +35,16 @@ class Checkers < Game
 #         player_toggle = false
 #       else
 #         begin
-#           move_pos = @red.make_move
-#         rescue ArgumentError => error
-#           puts error.message
+#           move_pos = @black.make_move
+#         rescue ArgumentError
+#         rescue Over9000Error
 #         retry
 #         end
 #
 #         @board.move_pieces(move_pos)
 #         player_toggle = true
 #       end
-#     end
+#     # end
   end
 
   def take_turn(player)
@@ -61,3 +59,4 @@ class Checkers < Game
   end
 
 end
+

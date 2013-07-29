@@ -11,7 +11,7 @@ class Game
 end
 
 class Chess < Game
-  attr_reader :board
+  attr_reader :board # Unknown who needs this
   attr_reader :white, :black # Debug
 
   def initialize
@@ -52,7 +52,7 @@ class Chess < Game
 end
 
 class Board
-  attr_reader :board # Game & Piece(s) need this
+  attr_reader :board # Piece(s) need this
   attr_reader :god_mode # Piece(s) & HumanPlayer need this
 
   def initialize

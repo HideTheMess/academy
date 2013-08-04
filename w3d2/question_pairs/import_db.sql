@@ -28,14 +28,14 @@ VALUES
 CREATE TABLE question_followers
 (
 	id INTEGER PRIMARY KEY,
-	follower_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
 	question_id INTEGER NOT NULL,
-	FOREIGN KEY (follower_id) REFERENCES users(id),
+	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 INSERT INTO
-	question_followers (follower_id, question_id)
+	question_followers (user_id, question_id)
 VALUES
 	(2, 1);
 

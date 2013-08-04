@@ -1,5 +1,5 @@
 // List each country name where the population is larger than 'Russia'.
-SELECT name
+SELECT name country
 FROM world
 WHERE population >
 (
@@ -9,7 +9,7 @@ WHERE population >
 
 // List the name and continent of countries in the continents containing
 // 'Belize', 'Belgium'.
-SELECT a.name, a.continent
+SELECT a.name country, a.continent
 FROM world a
 WHERE a.continent IN
 (
@@ -20,7 +20,7 @@ WHERE a.continent IN
 
 // Show the countries in Europe with a per capita GDP greater than
 // 'United Kingdom'.
-SELECT a.name
+SELECT a.name country
 FROM world a
 WHERE a.continent = 'Europe'
 AND a.gdp/a.population >
@@ -32,7 +32,7 @@ AND a.gdp/a.population >
 
 // Which country has a population that is more than Canada but less than Poland?
 // Show the name and the population.
-SELECT a.name, a.population
+SELECT a.name country, a.population
 FROM world a
 WHERE a.population >
 (
@@ -49,7 +49,7 @@ AND a.population <
 
 // Which countries have a GDP greater than any country in Europe? [Give the
 // name only.]
-SELECT a.name
+SELECT a.name country
 FROM world a
 WHERE a.gdp > ALL
 (
@@ -60,7 +60,7 @@ WHERE a.gdp > ALL
 
 // Find the largest country (by area) in each continent, show the continent,
 // the name and the area:
-SELECT continent, name, area
+SELECT continent, name country, area
 FROM world x
 WHERE area >= ALL
 (
@@ -71,7 +71,7 @@ WHERE area >= ALL
 
 // Find each country that belongs to a continent where all populations are less
 // than 25000000. Show name, continent and population.
-SELECT a.name, a.continent, a.population
+SELECT a.name country, a.continent, a.population
 FROM world a
 WHERE 25000000 > ALL
 (
@@ -83,7 +83,7 @@ WHERE 25000000 > ALL
 
 // Some countries have populations more than three times that of any of their
 // neighbours (in the same continent). Give the countries and continents.
-SELECT a.name, a.continent
+SELECT a.name country, a.continent
 FROM world a
 WHERE a.population > ALL
 (

@@ -2,7 +2,7 @@ require 'singleton'
 require 'sqlite3'
 
 class QuestionDatabase < SQLite3::Database
-	include Singleton
+  include Singleton
 
 	def initialize
 		super('questions.db')

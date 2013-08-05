@@ -8,6 +8,7 @@
 
 User.create!(name: 'Apples')
 User.create!(name: 'Charlie')
+User.create!(name: 'Hermoine')
 
 Poll.create!(title: 'Med History', author_id: 1)
 
@@ -17,3 +18,4 @@ Choice.create!(response_text: 'Yes', question_id: 1)
 Choice.create!(response_text: 'No', question_id: 1)
 
 Response.create!(user_id: 2, choice_id: 2)
+Response.create!(user_id: 3, choice_id: 2)

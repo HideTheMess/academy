@@ -1,4 +1,4 @@
--- List each country name where the population is larger than 'Russia'.
+-- 1. List each country name where the population is larger than 'Russia'.
 SELECT name country
 FROM world
 WHERE population >
@@ -7,7 +7,7 @@ WHERE population >
   WHERE name='Russia'
 )
 
--- List the name and continent of countries in the continents containing
+-- 2. List the name and continent of countries in the continents containing
 -- 'Belize', 'Belgium'.
 SELECT a.name country, a.continent
 FROM world a
@@ -18,7 +18,7 @@ WHERE a.continent IN
   WHERE b.name IN ('Belize', 'Belgium')
 )
 
--- Show the countries in Europe with a per capita GDP greater than
+-- 3. Show the countries in Europe with a per capita GDP greater than
 -- 'United Kingdom'.
 SELECT a.name country
 FROM world a
@@ -30,8 +30,8 @@ AND a.gdp/a.population >
   WHERE b.name = 'United Kingdom'
 )
 
--- Which country has a population that is more than Canada but less than Poland?
--- Show the name and the population.
+-- 4. Which country has a population that is more than Canada but less than
+-- Poland? Show the name and the population.
 SELECT a.name country, a.population
 FROM world a
 WHERE a.population >
@@ -47,7 +47,7 @@ AND a.population <
   WHERE c.name = 'Poland'
 )
 
--- Which countries have a GDP greater than any country in Europe? [Give the
+-- 5. Which countries have a GDP greater than any country in Europe? [Give the
 -- name only.]
 SELECT a.name country
 FROM world a
@@ -58,7 +58,7 @@ WHERE a.gdp > ALL
   WHERE b.continent = 'Europe'
 )
 
--- Find the largest country (by area) in each continent, show the continent,
+-- 6. Find the largest country (by area) in each continent, show the continent,
 -- the name and the area:
 SELECT continent, name country, area
 FROM world x
@@ -69,8 +69,8 @@ WHERE area >= ALL
   AND area>0
 )
 
--- Find each country that belongs to a continent where all populations are less
--- than 25000000. Show name, continent and population.
+-- 7. Find each country that belongs to a continent where all populations are
+-- less than 25000000. Show name, continent and population.
 SELECT a.name country, a.continent, a.population
 FROM world a
 WHERE 25000000 > ALL
@@ -81,7 +81,7 @@ WHERE 25000000 > ALL
   AND b.population > 0
 )
 
--- Some countries have populations more than three times that of any of their
+-- 8. Some countries have populations more than three times that of any of their
 -- neighbours (in the same continent). Give the countries and continents.
 SELECT a.name country, a.continent
 FROM world a

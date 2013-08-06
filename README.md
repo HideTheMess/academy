@@ -66,7 +66,7 @@
 ### Week 3, Day 1
 + [SQL Zoo][sql_zoo]
 
-[sql-zoo]: w3d1
+[sql_zoo]: w3d1
 
 ##ActiveRecord
 ### Week 3, Day 3

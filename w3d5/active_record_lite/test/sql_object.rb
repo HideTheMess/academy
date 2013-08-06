@@ -1,5 +1,4 @@
-# require 'active_record_lite'
-require_relative '../lib/active_record_lite'
+require 'active_record_lite'
 
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
 cats_db_file_name =
@@ -26,3 +25,7 @@ p Cat.all
 c = Cat.new(:name => "Gizmo", :owner_id => 1)
 c.save # create
 c.save # update
+
+p c
+p Human.all
+p Cat.all

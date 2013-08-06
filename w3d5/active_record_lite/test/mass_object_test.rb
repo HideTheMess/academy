@@ -1,5 +1,4 @@
-# require 'active_record_lite'
-require_relative '../lib/active_record_lite'
+require 'active_record_lite'
 
 class MyMassObject < MassObject
   set_attrs(:x, :y)

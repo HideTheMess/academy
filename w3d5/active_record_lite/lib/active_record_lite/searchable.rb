@@ -6,12 +6,12 @@ module Searchable
       "#{key} = ?"
     end
 
-    table_entry = DBConnection.execute(<<-SQL, params.values)
+    where_array = DBConnection.execute(<<-SQL, params.values)
       SELECT *
       FROM #{ self.table_name }
       WHERE #{ where_clause.join(' AND ') }
     SQL
 
-    new(table_entry.first)
+    parse_all(where_array)
   end
 end

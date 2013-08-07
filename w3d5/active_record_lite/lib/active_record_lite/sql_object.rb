@@ -20,9 +20,7 @@ class SQLObject < MassObject
       FROM #{ table_name }
     SQL
 
-    all_array.map do |table_entry|
-      new(table_entry)
-    end
+    parse_all(all_array)
   end
 
   def self.find(id)

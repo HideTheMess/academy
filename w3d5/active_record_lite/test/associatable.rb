@@ -23,7 +23,7 @@ end
 
 class House < SQLObject
   set_table_name("houses")
-  set_attrs(:id, :address, :house_id)
+  set_attrs(:id, :address)
 end
 
 cat = Cat.find(1)

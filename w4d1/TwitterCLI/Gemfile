@@ -7,6 +7,9 @@ gem 'rails', '3.2.13'
 
 gem 'sqlite3'
 gem 'pry-rails'
+gem 'launchy'
+gem 'oauth'
+gem "figaro"
 
 
 # Gems used only for assets and not required

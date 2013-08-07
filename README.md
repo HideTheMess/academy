@@ -81,7 +81,7 @@
 + [Reimplement attr_accessor][new_attr_accessor]
 
 [build-your-own-ar]: w3d5/active_record_lite
-[new_attr_accessor]: w3d5/new_attr_accessor.rb
+[new_attr_accessor]: w3d5/new_attr_accessor
 
 ## The Web
 ### Week 4, Day 1

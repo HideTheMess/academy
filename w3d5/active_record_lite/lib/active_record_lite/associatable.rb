@@ -47,7 +47,7 @@ class BelongsToAssocParams < AssocParams
 end
 
 class HasManyAssocParams < AssocParams
-  def initialize(name, params, self_class)
+  def initialize(name, params, self_class) # Question: Need self_class?
     unless params[:class_name].nil?
       @other_class_name = params[:class_name]
       # TODO: Convert @other_class_name to snake case
@@ -84,17 +84,23 @@ end
 
 module Associatable
   def assoc_params
+    if @assoc_params.nil?
+      @assoc_params = {}
+    end
+
+    @assoc_params
   end
 
   def belongs_to(name, params = {})
-    aps = BelongsToAssocParams.new(name, params)
+    assoc_params[name] = BelongsToAssocParams.new(name, params)
+    aps = assoc_params[name]
 
     define_method(name) do
 
       other_record = DBConnection.execute(<<-SQL, send(aps.foreign_key))
         SELECT *
         FROM #{ aps.other_table }
-        WHERE id = ?
+        WHERE #{ aps.primary_key } = ?
       SQL
 
       aps.other_class.parse_all(other_record)
@@ -109,7 +115,7 @@ module Associatable
       other_records = DBConnection.execute(<<-SQL, send(aps.primary_key))
         SELECT *
         FROM #{ aps.other_table }
-        WHERE owner_id = ?
+        WHERE #{ aps.foreign_key } = ?
       SQL
 
       aps.other_class.parse_all(other_records)
@@ -117,5 +123,25 @@ module Associatable
   end
 
   def has_one_through(name, assoc1, assoc2)
+    aps1 = assoc_params[assoc1]
+
+
+    define_method(name) do
+      aps2 = aps1.other_class.assoc_params[assoc2]
+
+      assoc1_id = send(aps1.foreign_key)
+      assoc2_id = aps1.other_class.find(assoc1_id).send(aps2.foreign_key)
+
+      other_record = DBConnection.execute(<<-SQL, assoc1_id, assoc2_id)
+        SELECT #{ aps2.other_table }.*
+        FROM #{ aps2.other_table }
+        JOIN #{ aps1.other_table }
+        ON #{ aps2.other_table }.#{ aps2.primary_key } = #{ aps2.foreign_key }
+        WHERE #{ aps1.other_table }.#{ aps1.primary_key } = ?
+        AND #{ aps2.other_table }.#{ aps2.primary_key } = ?
+      SQL
+
+      aps2.other_class.parse_all(other_record)
+    end
   end
 end

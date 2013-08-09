@@ -25,5 +25,16 @@
 		</tr>
 
 	</table>
+
+	<br>
+
+	<form action="/cats/<%= @cat.id %>" method="post">
+
+		<label for="cat_destroy"> Delete: Are you sure? </label>
+		<input type="submit" value="Destroy cat" >
+
+		<input type="hidden" value="delete" name="_method" id="cat_destroy">
+	</form>
+
 </body>
 </html>

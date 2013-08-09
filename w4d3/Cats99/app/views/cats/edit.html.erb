@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+	<h1>Edit cat</h1>
+
+	<form action="/cats/<%= @cat.id %>" method="post">
+
+		<label for="cat_name"> Name </label>
+		<input type="text" name="cat[name]" id="cat_name" value=<%= @cat.name %>>
+
+		<br>
+
+		<label for="cat_bdate"> Birth Date </label>
+		<input type="date" name="cat[birthdate]" id="cat_bdate"
+		  value=<%= @cat.birth_date %>>
+
+		<br>
+		<% if @cat.color == "Red" %> selected="selected" <% end %>
+		<label for="cat_color"> Color </label>
+		<select name="cat[color]" id="cat_color">
+			<option value="Red"
+				<% if @cat.color == "Red" %> selected="selected" <% end %> >
+				Red </option>
+
+			<option value="Black"
+				<% if @cat.color == "Black" %> selected="selected" <% end %> >
+				Black </option>
+
+			<option value="White"
+				<% if @cat.color == "White" %> selected="selected" <% end %> >
+				White </option>
+
+			<option value="Blue"
+				<% if @cat.color == "Blue" %> selected="selected" <% end %> >
+				Blue </option>
+
+			<option value="Other"
+				<% if @cat.color == "Other" %> selected="selected" <% end %> >
+				Other </option>
+		</select>
+
+		<br>
+
+		<label for="cat_sex"> Sex </label>
+		<select name="cat[sex]" id="cat_sex">
+			<option value="Male"
+				<% if @cat.sex == "Male" %> selected="selected" <% end %> >
+				Male </option>
+
+			<option value="Female"
+				<% if @cat.sex == "Female" %> selected="selected" <% end %> >
+				Female </option>
+
+			<option value="Both"
+				<% if @cat.sex == "Both" %> selected="selected" <% end %> >
+				Both </option>
+
+			<option value="None"
+				<% if @cat.sex == "None" %> selected="selected" <% end %> >
+				None </option>
+
+			<option value="Alien"
+				<% if @cat.sex == "Alien" %> selected="selected" <% end %> >
+				Alien </option>
+		</select>
+
+		<br>
+
+		<input type="submit" value="Edit cat">
+
+		<input type="hidden" value="put" name="_method">
+	</form>
+
+</body>
+</html>

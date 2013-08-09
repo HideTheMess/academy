@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 ActiveRecord::Base.transaction do
-  a = Cat.new(name: 'A', color: 'Blue', sex: 'Male',
+  a = Cat.create!(name: 'A', color: 'Blue', sex: 'Male',
     birth_date: Date.strptime('08-08-2012', '%d-%m-%Y'))
-  a.save!
 end

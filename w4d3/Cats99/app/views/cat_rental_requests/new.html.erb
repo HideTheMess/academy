@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+	<h1>Create cat rental request</h1>
+
+	<table>
+		<tr>
+
+			<th> Cat ID </th>
+			<th> Name </th>
+			<th> Age </th>
+			<th> Birth Date </th>
+			<th> Color </th>
+			<th> Sex </th>
+
+		</tr>
+
+		<% @cats.each do |cat| %>
+		<tr>
+
+			<td> <%= cat.id %> </td>
+			<td> <%= cat.name %> </td>
+			<td> <%= "%.1f" % cat.age %> </td>
+			<td> <%= cat.birth_date.strftime('%m-%d-%Y') %> </td>
+			<td> <%= cat.color %> </td>
+			<td> <%= cat.sex %> </td>
+
+		</tr>
+		<% end %>
+
+	</table>
+
+	<br>
+
+	<form action="/cat_rental_requests" method="post">
+
+		<label for="cat_id"> Cat </label>
+		<select name="cat_rental_request[catid]" id="cat_id">
+			<% @cats.each do |cat| %>
+				<option value=<%= cat.id %> > <%= cat.id %>: <%= cat.name %> </option>
+			<% end %>
+		</select>
+
+		<br>
+
+		<label for="request_begin"> Begin Date </label>
+		<input type="date" name="cat_rental_request[begindate]" id="request_begin">
+
+
+		<br>
+
+		<label for="request_end"> End Date </label>
+		<input type="date" name="cat_rental_request[enddate]" id="request_end">
+
+		<br>
+
+		<input type="submit" value="Create request">
+
+	</form>
+
+</body>
+</html>

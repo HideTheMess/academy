@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<table>
+		<tr>
+
+			<th>Name</th>
+			<th>Age</th>
+			<th>Birth Date</th>
+			<th>Color</th>
+			<th>Sex</th>
+
+		</tr>
+
+		<tr>
+
+			<td> <%= @cat.name %> </td>
+			<td> <%= "%.1f" % @cat.age %> </td>
+			<td> <%= @cat.birth_date.strftime('%d-%m-%Y') %> </td>
+			<td> <%= @cat.color %> </td>
+			<td> <%= @cat.sex %> </td>
+
+		</tr>
+
+	</table>
+</body>
+</html>

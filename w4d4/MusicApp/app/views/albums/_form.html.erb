@@ -1,0 +1,45 @@
+<% action_url = (album.persisted?) ? album_url : albums_url %>
+
+<form action="<%= action_url %>" method="post">
+
+  <label for="album_name"> Name </label>
+  <input type="text" name="album[name]" value="<%= album.name %>"
+                                                                id="album_name">
+
+  <br>
+
+  <label for="album_band"> Band </label>
+  <select name="album[band_id]" id="album_band">
+    <% bands.each do |band| %>
+    <option value="<%= band.id %>"
+                          <% if band.id == album.band_id %> selected <% end %> >
+                                      <%= object_id_and_name(band) %> </option>
+    <% end %>
+  </select>
+
+  <br>
+
+  <input type="radio" name="album[album_type]" value="Studio"
+                         <% if album.album_type == "Studio" %> checked <% end %>
+                                                        id="album_type_studio">
+  <label for="album_type_studio"> Studio Album </label>
+  <br>
+  <input type="radio" name="album[album_type]" value="Live"
+                          <% if album.album_type == "Live" %> checked <% end %>
+                                                          id="album_type_live">
+  <label for="album_type_live"> Live Album </label>
+
+  <br>
+
+  <% if album.persisted? %>
+
+    <input type="submit" value="Edit Album">
+    <input type="hidden" name="_method" value="put">
+
+  <% else %>
+
+    <input type="submit" value="New Album">
+
+  <% end %>
+
+</form>

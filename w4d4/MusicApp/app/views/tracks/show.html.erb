@@ -1,0 +1,43 @@
+<h1> <%= object_id_and_name(@track) %> </h1>
+<h2> from <%= object_id_and_name(@track.album) %> </h2>
+<h2> by <%= object_id_and_name(@track.album.band) %> </h2>
+<%= flash_below_header %>
+
+<br>
+
+<%= button_to("Destroy", track_url, method: "delete" ) %>
+
+<br>
+
+<%= @track.track_type %> Track
+
+<br>
+<br>
+
+Lyrics:
+
+<p><%= @track.lyrics.gsub("\r\n", "<br>").html_safe %></p>
+
+<br>
+
+<h2> Notes </h2>
+
+<form action="<%= notes_url %>" method="post">
+
+  <input type="hidden" name="note[track_id]" value="<%= @track.id %>">
+  <label for="notes"> New Note </label>
+  <br>
+  <textarea name="note[notes]" id="notes"></textarea>
+
+  <br>
+
+  <input type="submit" value="Post">
+
+</form>
+
+<br>
+
+<ul>
+  <%= render partial: 'notes/note',
+                        locals: { notes: Note.where(track_id: params[:id]) } %>
+</ul>

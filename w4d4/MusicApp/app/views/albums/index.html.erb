@@ -1,0 +1,7 @@
+<h1> Albums </h1>
+<%= flash_below_header %>
+<ul>
+  <% @albums.each do |album| %>
+  <li> <%= object_id_and_name(album) %> </li>
+  <% end %>
+</ul>

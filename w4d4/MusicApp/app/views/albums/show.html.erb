@@ -1,0 +1,11 @@
+<h1> <%= object_id_and_name(@album) %> </h1>
+<h2> by <%= object_id_and_name(@album.band) %> </h2>
+<%= flash_below_header %>
+
+<br>
+
+<%= button_to("Destroy", album_url, method: "delete" ) %>
+
+<br>
+
+<%= @album.album_type %> Album

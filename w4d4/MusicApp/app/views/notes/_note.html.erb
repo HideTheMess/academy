@@ -1,0 +1,6 @@
+<% notes.each do |note| %>
+<li> Note <%= note.id %>:
+  <%= button_to("Destroy", note_url(note.id), method: "delete" ) %>
+  <li> <%= note.notes %> </li>
+</li>
+<% end %>

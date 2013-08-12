@@ -1,0 +1,7 @@
+<h1> Tracks </h1>
+<%= flash_below_header %>
+<ul>
+  <% @tracks.each do |track| %>
+  <li> <%= object_id_and_name(track) %> </li>
+  <% end %>
+</ul>

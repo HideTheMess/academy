@@ -1,0 +1,7 @@
+<h1> Bands </h1>
+<%= flash_below_header %>
+<ul>
+  <% @bands.each do |band| %>
+    <li> <%= object_id_and_name(band) %> </li>
+  <% end %>
+</ul>

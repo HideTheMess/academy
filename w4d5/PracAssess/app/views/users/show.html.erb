@@ -1,0 +1,17 @@
+<h1> <%= @user.name %> </h1>
+
+<h2> Following: </h2>
+
+<ul>
+	<% @follows.each do |followee| %>
+		<li> <%= followee.name %> </li>
+	<% end %>
+</ul>
+
+<h2> People Following You: </h2>
+
+<ul>
+	<% @followers.each do |follower| %>
+		<li> <%= follower.name %> </li>
+	<% end %>
+</ul>

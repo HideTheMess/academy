@@ -14,7 +14,7 @@ class MyController < ControllerBase
     # render_content("hello world!", "text/html")
 
     # redirect to google.com
-    # redirect_to 'http://www.google.com/'
+    # redirect_to 'https://www.google.com/'
 
     # after you have template rendering, uncomment:
    # render :show

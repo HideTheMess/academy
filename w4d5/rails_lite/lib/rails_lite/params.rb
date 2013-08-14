@@ -8,6 +8,9 @@ class Params
     end
     unless req.body.nil?
       parse_www_encoded_form(req.body)
+      @params.keys.each do |key|
+        p parse_key(key)
+      end
     end
   end
 
@@ -20,32 +23,32 @@ class Params
 
   private
   def parse_www_encoded_form(www_encoded_form)
-    query_string_array = URI.decode_www_form(www_encoded_form)
+    decoded_array = URI.decode_www_form(www_encoded_form)
 
-    query_string_array.each do |key, val|
-      # @params.merge!(recurs_nested_keys(parse_key(key), val))
-      merge_hash = recurs_nested_keys(parse_key(key), val)
-      recurs_nested_hashes_merge(merge_hash, @params)
-    end
-  end
-
-  def recurs_nested_hashes_merge(from_hash, to_hash)
-    from_key = from_hash.keys.first
-    unless to_hash.include?(from_hash.keys.first)
-      to_hash.merge!( from_key => from_hash[from_key] )
-      return
-    end
-
-    recurs_nested_hashes_merge(from_hash[from_key], to_hash[from_key])
-  end
-
-  def recurs_nested_keys(keys_array, value)
-    return { keys_array.first => value } if keys_array.size == 1
-
-    return { keys_array.first => recurs_nested_keys(keys_array[1..-1], value) }
+    merge_nested_hash(decoded_array, @params)
+    # decoded_array.each do |key, val|
+#       @params[key] = val
+#     end
   end
 
   def parse_key(key)
     key.split(/\]\[|\[|\]/)
+  end
+
+  def merge_nested_hash(from_array, to_hash)
+    from_array.each do |key, val|
+      key_array = parse_key(key)
+      add_nested_hash_leg(to_hash, key_array, val)
+    end
+  end
+
+  def add_nested_hash_leg(to_hash, key_array, value)
+    return to_hash[key_array.first] = value if key_array.size == 1
+
+    unless to_hash.key?(key_array.first)
+      to_hash[key_array.first] = {}
+    end
+
+    add_nested_hash_leg(to_hash[key_array.first], key_array[1..-1], value)
   end
 end

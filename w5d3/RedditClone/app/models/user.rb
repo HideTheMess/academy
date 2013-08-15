@@ -4,8 +4,10 @@ class User < ActiveRecord::Base
   attr_accessible :username, :password_digest, :password, :session_token
 
   validates :username, :password_digest, :session_token, presence: true
+  validates :username, uniqueness: true
 
   def password=(password)
+    return nil if password.blank?
     self.password_digest = BCrypt::Password.create(password)
   end
 

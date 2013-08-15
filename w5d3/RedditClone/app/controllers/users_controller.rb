@@ -10,16 +10,24 @@ class UsersController < ApplicationController
     if user.save
       session[:token] = user.session_token
 
-      rendirect_to user_url(user.id)
+      flash[:notices] ||= []
+      flash[:notices] << "Thanks for signing up, #{ user.username }!"
+      redirect_to user_url(user.id)
     else
+      flash.now[:notices] ||= []
+      flash.now[:notices] << "Username / Password can't be blank"
       render :new
     end
   end
 
   def show
-    if current_user.id == params[:id]
+    user = User.find(params[:id])
+
+    if current_user == user
       render :show
     else
+      flash[:notices] ||= []
+      flash[:notices] << "Not your profile page"
       redirect_to new_session_url
     end
   end

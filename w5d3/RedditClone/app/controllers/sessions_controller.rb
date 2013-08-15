@@ -10,16 +10,23 @@ class SessionsController < ApplicationController
       session[:token] = user.reset_session_token
       user.save
 
+      flash[:notices] ||= []
+      flash[:notices] << "You are now logged in as #{ user.username }"
       redirect_to user_url(user.id)
     else
+      flash.now[:notices] ||= []
+      flash.now[:notices] << "Invalid Username / Password"
       render :new
     end
   end
 
   def destroy
+    user = current_user
     current_user.reset_session_token
     session[:token] = nil
 
+    flash[:notices] ||= []
+    flash[:notices] << "#{ user.username } is now logged out"
     redirect_to new_session_url
   end
 end

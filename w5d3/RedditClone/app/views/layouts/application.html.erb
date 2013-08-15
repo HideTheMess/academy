@@ -8,6 +8,19 @@
 </head>
 <body>
 
+<% unless current_user.blank? %>
+  <%= current_user.username %>
+  <%= button_to('Log Out', session_url, method: :delete) %>
+<% end %>
+
+<br>
+
+<% flash[:notices] ||= [] %>
+<% flash[:notices].each do |notice| %>
+  <%= notice %>
+  <br>
+<% end %>
+
 <%= yield %>
 
 </body>

@@ -1,4 +1,10 @@
-Sign Up
+<!-- Guest has Access -->
+<h1> New User </h1>
+
+Need to
+<%= button_to('Log In?', new_session_url, method: :get) %>
+
+<br>
 
 <form action='<%= users_url %>' method='post'>
   <label for='username'> Username </label>
@@ -13,5 +19,5 @@ Sign Up
 
   <br>
 
-  <input type='submit' value='Sign Up'>
+  <input type='submit' value='Register'>
 </form>

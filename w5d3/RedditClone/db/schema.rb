@@ -11,12 +11,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130815180315) do
+ActiveRecord::Schema.define(:version => 20130815204840) do
+
+  create_table "links", :force => true do |t|
+    t.string   "title",      :null => false
+    t.string   "url",        :null => false
+    t.string   "body"
+    t.integer  "author_id",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "links", ["author_id"], :name => "index_links_on_author_id"
+
+  create_table "sub_links", :force => true do |t|
+    t.integer  "sub_id"
+    t.integer  "link_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sub_links", ["link_id"], :name => "index_sub_links_on_link_id"
+  add_index "sub_links", ["sub_id", "link_id"], :name => "index_sub_links_on_sub_id_and_link_id", :unique => true
+  add_index "sub_links", ["sub_id"], :name => "index_sub_links_on_sub_id"
+
+  create_table "subs", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "mod_id",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "subs", ["mod_id"], :name => "index_subs_on_mod_id"
 
   create_table "users", :force => true do |t|
-    t.string   "username"
-    t.string   "password_digest"
-    t.string   "session_token"
+    t.string   "username",        :null => false
+    t.string   "password_digest", :null => false
+    t.string   "session_token",   :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end

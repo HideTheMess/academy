@@ -1,9 +1,13 @@
 class UsersController < ApplicationController
-  def new
-    render :new
+  def new # Guest has Access
+    unless logged_in?
+      render :new
+    else
+      redirect_to user_url(current_user.id)
+    end
   end
 
-  def create
+  def create # Guest has Access
     user = User.new(params[:user])
     user.reset_session_token
 
@@ -20,10 +24,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
+  def show # User has Access
     user = User.find(params[:id])
 
     if current_user == user
+      @subs = user.modded_subs
+      @links = user.authored_links
+
       render :show
     else
       flash[:notices] ||= []

@@ -1,9 +1,13 @@
 class SessionsController < ApplicationController
-  def new
-    render :new
+  def new # Guest has Access
+    unless logged_in?
+      render :new
+    else
+      redirect_to user_url(current_user.id)
+    end
   end
 
-  def create
+  def create # User has Access
     user = User.find_by_username(params[:user][:username])
 
     unless user.blank? || !( user.authenticated?(params[:user][:password]) )
@@ -20,13 +24,16 @@ class SessionsController < ApplicationController
     end
   end
 
-  def destroy
-    user = current_user
-    current_user.reset_session_token
+  def destroy # User has Access
+    unless current_user.blank?
+      flash[:notices] ||= []
+      flash[:notices] << "#{ current_user.username } is now logged out"
+
+      current_user.reset_session_token
+    end
+
     session[:token] = nil
 
-    flash[:notices] ||= []
-    flash[:notices] << "#{ user.username } is now logged out"
     redirect_to new_session_url
   end
 end

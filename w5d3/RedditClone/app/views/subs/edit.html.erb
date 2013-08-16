@@ -1,0 +1,15 @@
+<!-- Mod has Access -->
+<h1> Edit Sub </h1>
+
+<form action='<%= sub_url %>' method='post'>
+  <input type='hidden' name='authenticity_token'
+                                        value='<%= form_authenticity_token %>'>
+  <input type='hidden' name='_method' value='put'>
+  <input type='hidden' name='sub[mod_id]' value='<%= current_user.id %>'>
+
+  <label for='sub_name'> Sub Name </label>
+  <br>
+  <input type='text' name='sub[name]' id='sub_name' value='<%= @sub.name %>'>
+
+  <input type='submit' value='Edit Sub'>
+</form>

@@ -1,0 +1,29 @@
+<!-- User has Access -->
+
+<!--
+This webpage is meant for Users to see only the Subs they want to see.
+There will also be functions such as creating and editting their Subs and Links
+ -->
+
+<%= button_to('New Sub', new_sub_url, method: :get) %>
+<%= button_to('New Link', new_link_url, method: :get) %>
+
+<h2> Subs you moderate </h2>
+
+<% @subs.each do |sub| %>
+  <a href='<%= sub_url(sub.id) %>'><%= sub.name %></a>
+
+  <br>
+<% end %>
+
+<h2> Links you authored </h2>
+
+<% @links.each do |link| %>
+  <% if link.body.blank? %>
+    <a href='<%= link.url %>'><%= link.title %></a>
+  <% else %>
+    <a href='<%= link_url(link.id) %>'><%= link.title %></a>
+  <% end %>
+
+  <br>
+<% end %>

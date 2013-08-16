@@ -9,11 +9,11 @@
 <body>
 
 <% unless current_user.blank? %>
-  <%= current_user.username %>
-  <%= button_to('Log Out', session_url, method: :delete) %>
+  <h1>
+    <%= current_user.username %>
+    <%= button_to('Log Out', session_url, method: :delete) %>
+  </h1>
 <% end %>
-
-<br>
 
 <% flash[:notices] ||= [] %>
 <% flash[:notices].each do |notice| %>

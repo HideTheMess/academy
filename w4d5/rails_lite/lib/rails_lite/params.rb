@@ -3,6 +3,7 @@ require 'uri'
 class Params
   def initialize(req, route_params)
     @params = {}
+    @params[:id] = route_params[1]
     unless req.query_string.nil?
       parse_www_encoded_form(req.query_string)
     end
@@ -15,6 +16,7 @@ class Params
   end
 
   def [](key)
+    @params[key]
   end
 
   def to_s

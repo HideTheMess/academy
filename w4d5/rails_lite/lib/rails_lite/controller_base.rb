@@ -5,9 +5,9 @@ require_relative 'session'
 class ControllerBase
   attr_reader :params
 
-  def initialize(req, res, route_params = nil)
+  def initialize(req, res, route_params = {})
     @req, @res = req, res
-    @params = Params.new(@req, nil)
+    @params = Params.new(req, route_params)
   end
 
   def session
@@ -15,6 +15,7 @@ class ControllerBase
   end
 
   def already_rendered?
+    @already_built
   end
 
   def redirect_to(url)
@@ -25,7 +26,7 @@ class ControllerBase
     @res.set_redirect(WEBrick::HTTPStatus[302], url)
     session.store_session(@res)
 
-    # @already_built = true
+    @already_built = true
   end
 
   def render_content(content, type)
@@ -33,7 +34,7 @@ class ControllerBase
     @res.body = content
     session.store_session(@res)
 
-    # @already_built = true
+    @already_built = true
   end
 
   def render(action_name)
@@ -46,5 +47,10 @@ class ControllerBase
   end
 
   def invoke_action(name)
+    send(name)
+
+    unless already_rendered?
+      render name
+    end
   end
 end

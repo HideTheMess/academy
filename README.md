@@ -21,7 +21,7 @@
 ## Basic design
 
 ### Week 1, Day 4
-+ [Hangman][hangman]
++ [**Hangman**][hangman]
 
 [hangman]: w1d4/hangman.rb
 
@@ -64,7 +64,7 @@
 
 ## SQL Basics
 ### Week 3, Day 1
-+ [** SQL Zoo **][sql_zoo]
++ [**SQL Zoo**][sql_zoo]
 
 [sql_zoo]: w3d1
 
@@ -77,11 +77,39 @@
 [polls]: w3d4/PollsApp
 
 ### Week 3, Day 5
-+ [** Building ActiveRecord-Lite **][build-your-own-ar]
-+ [Reimplement attr_accessor][new_attr_accessor]
++ [**Building ActiveRecord-Lite**][build-your-own-ar]
++ [**Reimplement attr_accessor**][new_attr_accessor]
 
 [build-your-own-ar]: w3d5/active_record_lite
 [new_attr_accessor]: w3d5/new_attr_accessor
 
 ## The Web
 ### Week 4, Day 1
+
+## Rails
+### Week 4, Day 2
+
+### Week 4, Day 3
++ [99cats][99cats]
+
+[99cats]: w4d3/Cats99
+
+### Week 4, Day 4
++ [Music App][music_app]
+
+[music_app]: w4d4/MusicApp
+
+### Week 4, Day 5
++ [**Rails Lite**][rails-lite]
++ [Assessment04-Practice][assessment04-practice]
+
+[rails-lite]: w4d5/rails_lite
+[assessment04-practice]: w4d5/PracAssess
+
+### Week 5, Day 3
++ [Reddit Clone][reddit-clone]
+
+[reddit-clone]: w5d3/RedditClone
+
+## Intro to JavaScript
+### Week 5, Day 5

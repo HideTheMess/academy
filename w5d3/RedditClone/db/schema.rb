@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130815204840) do
+ActiveRecord::Schema.define(:version => 20130817001551) do
+
+  create_table "link_subs", :force => true do |t|
+    t.integer  "sub_id"
+    t.integer  "link_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "link_subs", ["link_id"], :name => "index_link_subs_on_link_id"
+  add_index "link_subs", ["sub_id", "link_id"], :name => "index_link_subs_on_sub_id_and_link_id", :unique => true
+  add_index "link_subs", ["sub_id"], :name => "index_link_subs_on_sub_id"
 
   create_table "links", :force => true do |t|
     t.string   "title",      :null => false
@@ -23,17 +34,6 @@ ActiveRecord::Schema.define(:version => 20130815204840) do
   end
 
   add_index "links", ["author_id"], :name => "index_links_on_author_id"
-
-  create_table "sub_links", :force => true do |t|
-    t.integer  "sub_id"
-    t.integer  "link_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "sub_links", ["link_id"], :name => "index_sub_links_on_link_id"
-  add_index "sub_links", ["sub_id", "link_id"], :name => "index_sub_links_on_sub_id_and_link_id", :unique => true
-  add_index "sub_links", ["sub_id"], :name => "index_sub_links_on_sub_id"
 
   create_table "subs", :force => true do |t|
     t.string   "name",       :null => false

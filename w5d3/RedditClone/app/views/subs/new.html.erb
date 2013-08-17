@@ -14,30 +14,30 @@
   <h2> Create Links </h2>
 
   <% @links.each_with_index do |link, i| %>
-    <% link_id = "link_#{i}" %>
+    <% link_num = "link_#{i}" %>
     <% link_name = "links[#{i}]" %>
 
-    <h3> Link <%= "#{ i+1 }" %> </h3>
+    <h3> Link <%= "#{ i + 1 }" %> </h3>
     <input type='hidden' name='<%= link_name %>[author_id]'
                                                 value='<%= current_user.id %>'>
 
-    <label for='<%= link_id %>_title'> Title </label>
+    <label for='<%= link_num %>_title'> Title </label>
     <br>
-    <input type='text' name='<%= link_name %>[title]' id='<%= link_id %>_title'
+    <input type='text' name='<%= link_name %>[title]' id='<%= link_num %>_title'
                                                       value='<%= link.title %>'>
 
     <br>
 
-    <label for='<%= link_id %>_url'> URL </label>
+    <label for='<%= link_num %>_url'> URL </label>
     <br>
-    <input type='text' name='<%= link_name %>[url]' id='<%= link_id %>_url'
+    <input type='text' name='<%= link_name %>[url]' id='<%= link_num %>_url'
                                                       value='<%= link.url %>'>
 
     <br>
 
-    <label for='<%= link_id %>_body'> Body </label>
+    <label for='<%= link_num %>_body'> Body </label>
     <br>
-    <textarea name='<%= link_name %>[body]' id='<%= link_id %>_body'
+    <textarea name='<%= link_name %>[body]' id='<%= link_num %>_body'
                                                     ><%= link.body %></textarea>
 
     <br>

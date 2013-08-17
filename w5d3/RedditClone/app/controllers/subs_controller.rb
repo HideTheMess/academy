@@ -29,7 +29,10 @@ class SubsController < ApplicationController
       ActiveRecord::Base.transaction do
         @sub.save!
 
-        non_blank_links.each { |link| link.save! }
+        non_blank_links.each do |link|
+          link.save!
+          LinkSub.create!(sub_id: @sub.id, link_id: link.id)
+        end
       end
     rescue
       flash.now[:notices] ||= []

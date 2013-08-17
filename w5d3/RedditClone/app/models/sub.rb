@@ -8,13 +8,13 @@ class Sub < ActiveRecord::Base
   foreign_key: :mod_id,
   primary_key: :id
 
-  has_many :sub_links,
-  class_name: 'SubLink',
+  has_many :link_subs,
+  class_name: 'LinkSub',
   foreign_key: :sub_id,
   primary_key: :id
 
   has_many :links,
-  through: :sub_links,
+  through: :link_subs,
   source:  :link
 
   # accepts_nested_attributes_for :links

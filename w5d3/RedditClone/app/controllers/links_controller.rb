@@ -1,5 +1,6 @@
 class LinksController < ApplicationController
   def new # User has Access
+    render :new
   end
 
   def create # User has Access

@@ -1,0 +1,49 @@
+<h1> New Link </h1>
+
+<form action='<%= links_url %>' method='post'>
+  <h2> Sub Membership </h2>
+
+  <input type='hidden' name='authenticity_token'
+                                        value='<%= form_authenticity_token %>'>
+  <input type='hidden' name='sub[mod_id]' value='<%= current_user.id %>'>
+
+  <label for='sub_name'> Sub Name </label>
+  <br>
+  <input type='text' name='sub[name]' id='sub_name' value='<%= @sub.name %>'>
+
+
+
+  <h2> Create Links </h2>
+
+  <% @links.each_with_index do |link, i| %>
+    <% link_num = "link_#{i}" %>
+    <% link_name = "links[#{i}]" %>
+
+    <h3> Link <%= "#{ i + 1 }" %> </h3>
+    <input type='hidden' name='<%= link_name %>[author_id]'
+                                                value='<%= current_user.id %>'>
+
+    <label for='<%= link_num %>_title'> Title </label>
+    <br>
+    <input type='text' name='<%= link_name %>[title]' id='<%= link_num %>_title'
+                                                      value='<%= link.title %>'>
+
+    <br>
+
+    <label for='<%= link_num %>_url'> URL </label>
+    <br>
+    <input type='text' name='<%= link_name %>[url]' id='<%= link_num %>_url'
+                                                      value='<%= link.url %>'>
+
+    <br>
+
+    <label for='<%= link_num %>_body'> Body </label>
+    <br>
+    <textarea name='<%= link_name %>[body]' id='<%= link_num %>_body'
+                                                    ><%= link.body %></textarea>
+
+    <br>
+  <% end %>
+
+  <input type='submit' value='Create Sub'>
+</form>

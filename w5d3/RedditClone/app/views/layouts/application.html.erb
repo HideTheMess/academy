@@ -10,7 +10,7 @@
 
 <% unless current_user.blank? %>
   <h1>
-    <%= current_user.username %>
+    <a href='<%= user_url(current_user.id) %>'><%= current_user.username %></a>
     <%= button_to('Log Out', session_url, method: :delete) %>
   </h1>
 <% end %>

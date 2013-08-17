@@ -77,7 +77,7 @@
 [polls]: w3d4/PollsApp
 
 ### Week 3, Day 5
-+ **[Building ActiveRecord-Lite]**[build-your-own-ar]
++ [**Building ActiveRecord-Lite**][build-your-own-ar]
 + [Reimplement attr_accessor][new_attr_accessor]
 
 [build-your-own-ar]: w3d5/active_record_lite

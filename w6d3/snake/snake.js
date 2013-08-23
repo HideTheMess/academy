@@ -1,8 +1,8 @@
 var SnakeGame = (function (Sn) {
 
-  Sn.Snake = function Snake (direction) {
+  Sn.Snake = function Snake () {
 		this.head = false;
-		this.direction = direction;
+		this.direction;
 		this.pos;
   };
 

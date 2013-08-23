@@ -1,19 +1,15 @@
 span {
-	height: 10px;
-	width: 10px;
-	background-color: #ffffdd;
-	display: inline-block;
+	height: 30px;
+	width: 30px;
+	background-color: #ffffbb;
+	display: inline-block;/*
 	border-style: dotted;
 	border-width: 1px;
-	border-color: #aaaaaa;
+	border-color: #aaaaaa;*/
 }
 
 .snake-head {
 
-}
-
-.snake {
-	background-color: blue;
 }
 
 .snake-tail {
@@ -21,5 +17,9 @@ span {
 }
 
 .apple {
+	background-color: red;
+}
 
+.snake {
+	background-color: blue;
 }

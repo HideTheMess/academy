@@ -1,0 +1,25 @@
+span {
+	height: 30px;
+	width: 30px;
+	background-color: #ffffbb;
+	display: inline-block;/*
+	border-style: dotted;
+	border-width: 1px;
+	border-color: #aaaaaa;*/
+}
+
+.snake-head {
+
+}
+
+.snake-tail {
+
+}
+
+.apple {
+	background-color: red;
+}
+
+.snake {
+	background-color: blue;
+}

@@ -1,0 +1,98 @@
+<% @users.each do |user| %>
+  <% next if user.id == current_user.id %>
+	<%= user.username %>
+	<div class='friend_buttons <% if friend?(user, @friendships) %>friended<% else %>unfriended<%end%>'>
+	<form class='friend'>
+		<input type='hidden' name='authenticity_token'
+																				value='<%= form_authenticity_token %>'>
+		<input type='hidden' name='friendship[user_id]'
+																								value='<%= current_user.id %>'>
+		<input type='hidden' name='friendship[friend_id]' value='<%= user.id %>'>
+
+		<input data-id='<%= user.id %>' type='submit' value='Friend'>
+	</form>
+
+	<form class='unfriend'>
+		<input type='hidden' name='authenticity_token'
+																				value='<%= form_authenticity_token %>'>
+		<input type='hidden' name='friendship[user_id]'
+																								value='<%= current_user.id %>'>
+		<input type='hidden' name='friendship[friend_id]' value='<%= user.id %>'>
+
+		<input data-id='<%= user.id %>' type='submit' value='Unfriend'>
+	</form>
+	<div>
+	<br>
+<% end %>
+
+<script>
+ 	$('.friend_buttons').find('input[value="Friend"]').on(
+ 		'click', function (event) {
+			var that = this;
+ 			event.preventDefault();
+
+ 			console.log($(this.form));
+ 			var formData = $(this.form).serialize();
+
+ 			$(this).attr('value', 'Friending...');
+			$(this).attr('disable', 'disable');
+
+			var id = $(this).attr('data-id');
+ 			$.ajax({
+ 				url: '/users/' + id + '/friendship',
+ 				type: 'POST',
+ 				data: formData,
+ 				success: function () {
+					console.log('Friend!');
+					$('.friend_buttons').toggleClass('friended');
+					$('.friend_buttons').toggleClass('unfriended');
+
+ 				}
+ 			});
+		}
+	);
+
+ 	$('.friend_buttons').find('input[value="Friending..."]').on(
+ 		'click', function (event) {
+ 			event.preventDefault();
+
+			$(this).attr('value', 'Friending...');
+ 			$(this).off('click');
+		}
+	);
+
+ 	$('.friend_buttons').find('input[value="Unfriend"]').on(
+ 		'click', function (event) {
+			var that = this;
+ 			event.preventDefault();
+
+ 			console.log($(this.form));
+ 			var formData = $(this.form).serialize();
+
+ 			$(this).attr('value', 'Unfriending...');
+			$(this).attr('disable', 'disable');
+
+			var id = $(this).attr('data-id');
+ 			$.ajax({
+ 				url: '/users/' + id + '/friendship',
+ 				type: 'DELETE',
+ 				data: formData,
+ 				success: function () {
+					console.log('Unfriend!');
+					$('.friend_buttons').toggleClass('friended');
+					$('.friend_buttons').toggleClass('unfriended');
+
+ 				}
+ 			});
+		}
+	);
+
+ 	$('.friend_buttons').find('input[value="Unfriending..."]').on(
+ 		'click', function (event) {
+ 			event.preventDefault();
+
+			$(this).attr('value', 'Unfriending...');
+ 			$(this).off('click');
+		}
+	);
+</script>

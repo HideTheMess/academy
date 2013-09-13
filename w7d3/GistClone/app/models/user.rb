@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :gists,
+  foreign_key: :owner_id
+
   def self.find_by_credentials(username, password)
     user = User.find_by_username(username)
 

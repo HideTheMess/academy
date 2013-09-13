@@ -1,7 +1,7 @@
 GistClone.Views.GistDetail = Backbone.View.extend({
   events: {
     'click button.favorite': 'toggleFavorite'
-  };
+  },
 
   template: JST['gists/show'],
 

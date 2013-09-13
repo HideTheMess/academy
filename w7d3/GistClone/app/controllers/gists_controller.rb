@@ -1,6 +1,9 @@
 class GistsController < ApplicationController
   def index
-    render json: Gist.where(owner_id: current_user.id)
+    @gists = current_user.gists
+
+    render 'index.json.rabl'
+    # render json: current_user.gists
   end
 end
 

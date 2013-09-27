@@ -1,4 +1,4 @@
-# App Academy Coursework
+# Web Development Exercises
 
 ## Ruby basics
 ### Week 1, Day 1
